@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:storyteller/wrapper.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoScreen extends StatefulWidget {
@@ -32,16 +34,20 @@ class VideoScreenState extends State<VideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Preview'),
+        title: const Text('Replay your video'),
         elevation: 0,
         backgroundColor: Colors.black26,
         actions: [
           IconButton(
-            icon: const Icon(Icons.check),
-            onPressed: () {
-              print('do something with the file');
-            },
-          )
+              icon: const Icon(Icons.check),
+              onPressed: () {
+                if (mounted) {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      PageTransition(type: PageTransitionType.rightToLeftWithFade, child: const Wrapper()),
+                      (Route<dynamic> route) => false);
+                }
+              })
         ],
       ),
       extendBodyBehindAppBar: true,

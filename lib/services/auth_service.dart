@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:storyteller/models/user_model.dart';
 import 'package:storyteller/services/local_storage_service.dart';
 import 'package:storyteller/wrapper.dart';
 
@@ -107,18 +108,18 @@ class AuthService {
     await secureLocalStorageService.setSecureStorage(key: 'userName', value: userName);
   }
 
-  static Future<Map> getUserFromSecureLocalStorage() async {
+  static Future<UserModel> getUserFromSecureLocalStorage() async {
     SecureLocalStorageService secureLocalStorageService = SecureLocalStorageService();
 
     String? uuid = await secureLocalStorageService.getSecureStorage(key: 'uuid');
     String? userName = await secureLocalStorageService.getSecureStorage(key: 'userName');
 
-    Map<String, String?> userInfo = {
-      'uuid': uuid,
-      'userName': userName,
-    };
+    UserModel user = UserModel(
+      uuid: uuid,
+      userName: userName,
+    );
 
-    return userInfo;
+    return user;
   }
 }
 

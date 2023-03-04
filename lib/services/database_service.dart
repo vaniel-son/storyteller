@@ -108,19 +108,22 @@ class DatabaseServices {
 
   Future<void> saveSession({uuid, userName, videoURL, sessionType, storyType, storyPromptType, storyPrompt}) async {
     /// collection reference to query users table
-    final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
+    final CollectionReference userCollection = FirebaseFirestore.instance.collection('storySessions');
+
+    String documentID = GeneralService.randomUUID();
 
     // Call the user's CollectionReference to add a new user
     return await userCollection
-        .doc('storySessions')
+        .doc(documentID) // create a random id for doc name
         .set({
-      'id': GeneralService.randomUUID(),
+      'id': documentID,
       'uuid': uuid,
       'userName': userName,
       'sessionType': sessionType, // ex. solo, actors, twoPlayers, etc. See SessionTypes in constants.dart
       'storyPromptType': storyPromptType, // ex. pregnancy, parent of toddler, etc. See StoryPromptTypes in constants.dart
       'storyPrompt': storyPrompt,
       'dateCreated': DateTime.now(),
+      'videoURL': videoURL,
     })
         .then((value) => print("story session Added"))
         .catchError((error) => print("Failed to story session: $error"));

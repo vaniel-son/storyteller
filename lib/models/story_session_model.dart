@@ -1,24 +1,24 @@
 class StorySessionModel {
   StorySessionModel({
     this.create = true,
-    this.playerPrompt = 'none',
+    this.storyPrompt = 'none',
     this.roomName = 'none',
-    this.playerPromptCategory = 'none',
+    this.storyPromptType = 'none',
     this.sessionType = 'none',
   });
 
   bool create; // true = creating a new room, false = joining a room
-  String playerPrompt; // a story prompt the player will respond to
+  String storyPrompt; // a story prompt the player will respond to
   String roomName; // the name of the room the player is creating or joining
-  String playerPromptCategory; // the category of the story prompt the player will respond to
+  String storyPromptType; // the category of the story prompt the player will respond to
   String sessionType; // ex. solo, actors, 2players
 
   Map<String, dynamic> toMap(){
     return {
       'create': create,
-      'playerPrompt': playerPrompt,
+      'playerPrompt': storyPrompt,
       'roomName': roomName,
-      'playerPromptCategory': playerPromptCategory,
+      'playerPromptCategory': storyPromptType,
       'sessionType': sessionType,
     };
   }

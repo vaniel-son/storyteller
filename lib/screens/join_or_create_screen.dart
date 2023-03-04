@@ -6,6 +6,7 @@ import 'package:storyteller/models/story_session_model.dart';
 import 'package:storyteller/services/openai_service.dart';
 import 'package:storyteller/services/general_service.dart';
 import 'package:lottie/lottie.dart';
+import 'package:storyteller/constants.dart' as constants;
 
 class JoinOrCreateRoomScreen extends StatefulWidget {
   const JoinOrCreateRoomScreen({Key? key, required this.storySession}) : super(key: key);
@@ -26,12 +27,14 @@ class _JoinOrCreateRoomScreenState extends State<JoinOrCreateRoomScreen> {
 
   selectOption(bool create){
     widget.storySession.create = create; // true for creating, false for joining
+    widget.storySession.sessionType = constants.SessionType.twoPlayers; // set session type
 
     Navigator.push(
         context, PageTransition(type: PageTransitionType.bottomToTop, child: InputRoomName(storySession: widget.storySession)));
   }
 
   soloCampfireButton(){
+    widget.storySession.sessionType = constants.SessionType.solo;
     Navigator.push(
         context, PageTransition(type: PageTransitionType.bottomToTop, child: CameraScreen(storySession: widget.storySession,)));
   }

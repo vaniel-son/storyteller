@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:storyteller/screens/video_2p/join_or_create_screen.dart';
+import 'package:storyteller/screens/join_or_create_screen.dart';
 import 'package:storyteller/models/story_session_model.dart';
 import 'package:storyteller/services/general_service.dart';
 import 'package:lottie/lottie.dart';
@@ -28,19 +28,19 @@ class _SelectStoryScreenState extends State<SelectStoryScreen> {
   String storyPrompt5 = 'Someone interesting you met this week';
 
   setStoryPrompt() {
-    if (widget.storySession.playerPromptCategory == constants.StoryPromptType.pregnancy) {
+    if (widget.storySession.storyPromptType == constants.StoryPromptType.pregnancy) {
       storyPrompt1 = 'Surprising moment this week about pregnancy';
       storyPrompt2 = 'Who made you feel grateful this week';
       storyPrompt3 = 'Who you could throw into a dumpster';
       storyPrompt4 = 'Your food cravings this past week';
       storyPrompt5 = 'Someone interesting you met this week';
-    } else if (widget.storySession.playerPromptCategory == constants.StoryPromptType.parentOfToddler) {
+    } else if (widget.storySession.storyPromptType == constants.StoryPromptType.parentOfToddler) {
       storyPrompt1 = '2Surprising moment this week about pregnancy';
       storyPrompt2 = '2Who made you feel grateful this week';
       storyPrompt3 = '2Who you could throw into a dumpster';
       storyPrompt4 = '2Your food cravings this past week';
       storyPrompt5 = '2Someone interesting you met this week';
-    } else if (widget.storySession.playerPromptCategory == constants.StoryPromptType.general) {
+    } else if (widget.storySession.storyPromptType == constants.StoryPromptType.general) {
       storyPrompt1 = '3Surprising moment this week about pregnancy';
       storyPrompt2 = '3Who made you feel grateful this week';
       storyPrompt3 = '3Who you could throw into a dumpster';
@@ -51,7 +51,7 @@ class _SelectStoryScreenState extends State<SelectStoryScreen> {
 
   selectQuestion(String storyPrompt){
     print('storyPrompt: $storyPrompt');
-    widget.storySession.playerPrompt = storyPrompt; // store story prompt in the object
+    widget.storySession.storyPrompt = storyPrompt; // store story prompt in the object
 
     Navigator.push(
         context, PageTransition(type: PageTransitionType.bottomToTop, child: JoinOrCreateRoomScreen(storySession: widget.storySession)));

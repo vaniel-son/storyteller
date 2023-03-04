@@ -1,13 +1,12 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:storyteller/models/story_session_model.dart';
+import 'package:storyteller/models/user_model.dart';
+import 'package:storyteller/screens/video_1p/video_screen.dart';
+import 'package:storyteller/services/auth_service.dart';
 import 'package:storyteller/services/database_service.dart';
 import 'package:storyteller/services/general_service.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-// import 'package:permission_handler/permission_handler.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class SavingScreen extends StatefulWidget {
   final String filePath;
@@ -21,8 +20,7 @@ class SavingScreen extends StatefulWidget {
 
 class SavingScreenState extends State<SavingScreen> {
   late VideoPlayerController _videoPlayerController;
-  final _firebaseStorage = FirebaseStorage.instance;
-  late String firebaseURL;
+  late String firebaseURLofVideo;
 
   // init database services
   DatabaseServices databaseServices = DatabaseServices();
@@ -34,25 +32,45 @@ class SavingScreenState extends State<SavingScreen> {
   }
 
   uploadVideo() async {
-    String firebaseURLofVideo = await GeneralService.uploadVideo(widget.filePath); // upload the video to firebase storage, returns receive the download URL
+    firebaseURLofVideo = await GeneralService.uploadVideo(widget.filePath); // upload the video to firebase storage, returns receive the download URL
     print('Video: $firebaseURLofVideo');
   }
 
   // save a record of the session to firestore
   saveSession() async {
     // fetch user info
-
+    UserModel user = await AuthService.getUserFromSecureLocalStorage(); // returns a User object
 
     // some set statement: date/time, video URL, user ID, prompt, promptType
-    databaseServices.saveSession(
-      uuid: 'xyz',
+    await databaseServices.saveSession(
+      uuid: user.uuid,
+      userName: user.userName,
+      sessionType: widget.storySession.sessionType, // ex. solo, 2p
+      storyPromptType: widget.storySession.storyPromptType, // ex. pregnancy, general
+      storyPrompt: widget.storySession.storyPrompt,
+      videoURL: firebaseURLofVideo,
     );
+  }
+
+  uploadAndSave() async {
+    await uploadVideo();
+    await saveSession();
+
+    // redirect to video replay screen
+    final route = MaterialPageRoute(
+      fullscreenDialog: true,
+      builder: (_) => VideoScreen(filePath: widget.filePath),
+    );
+
+    if (mounted) {
+      Navigator.push(context, route);
+    }
 
   }
 
   @override
   Widget build(BuildContext context) {
-    uploadVideo();
+    uploadAndSave();
 
     return Scaffold(
       /* appBar: AppBar(

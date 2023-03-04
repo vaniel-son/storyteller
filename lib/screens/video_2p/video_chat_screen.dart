@@ -70,7 +70,7 @@ class _VideoChatState extends State<VideoChat> {
                   //borderRadius: roundCornersRadius(),
                 ),
                 child: Text(
-                  widget.storySession.playerPrompt,
+                  widget.storySession.storyPrompt,
                   style: const TextStyle(color: Colors.white, fontSize: 12),
                 ),
                 //Text('  Personal Record: $personalRecord  ', style: Theme.of(context).textTheme.caption)

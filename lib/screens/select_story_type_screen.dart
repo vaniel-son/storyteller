@@ -25,7 +25,7 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
   bool isLoading = false;
 
   selectOption(String storyPromptType){
-    storySession.playerPromptCategory = storyPromptType; // set the story category type
+    storySession.storyPromptType = storyPromptType; // set the story category type
 
     Navigator.push(
         context, PageTransition(type: PageTransitionType.bottomToTop, child: SelectStoryScreen(storySession: storySession)));
