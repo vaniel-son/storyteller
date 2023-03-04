@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:storyteller/services/general_service.dart';
 
 class DatabaseServices {
   /// ***********************************************************************
@@ -105,20 +106,24 @@ class DatabaseServices {
   /// ***********************************************************************
   /// ***********************************************************************
 
-  Future<void> saveSession(uid, nickname) async {
+  Future<void> saveSession({uuid, userName, videoURL, sessionType, storyType, storyPromptType, storyPrompt}) async {
     /// collection reference to query users table
     final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
 
     // Call the user's CollectionReference to add a new user
     return await userCollection
-        .doc(uid)
+        .doc('storySessions')
         .set({
-      'User_ID': uid, // John Doe
-      'Nickname': nickname, // Stokes and Sons
-      'Date_Created': DateTime.now(),
+      'id': GeneralService.randomUUID(),
+      'uuid': uuid,
+      'userName': userName,
+      'sessionType': sessionType, // ex. solo, actors, twoPlayers, etc. See SessionTypes in constants.dart
+      'storyPromptType': storyPromptType, // ex. pregnancy, parent of toddler, etc. See StoryPromptTypes in constants.dart
+      'storyPrompt': storyPrompt,
+      'dateCreated': DateTime.now(),
     })
-        .then((value) => print("User Added"))
-        .catchError((error) => print("Failed to add user: $error"));
+        .then((value) => print("story session Added"))
+        .catchError((error) => print("Failed to story session: $error"));
   }
 
 }

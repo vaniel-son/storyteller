@@ -49,7 +49,7 @@ class CameraScreenState extends State<CameraScreen> {
 
       final route = MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (_) => SavingScreen(filePath: file.path),
+        builder: (_) => SavingScreen(filePath: file.path, storySession: widget.storySession),
       );
 
       if (mounted) {

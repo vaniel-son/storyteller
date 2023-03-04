@@ -106,6 +106,20 @@ class AuthService {
     await secureLocalStorageService.setSecureStorage(key: 'uuid', value: uuid);
     await secureLocalStorageService.setSecureStorage(key: 'userName', value: userName);
   }
+
+  static Future<Map> getUserFromSecureLocalStorage() async {
+    SecureLocalStorageService secureLocalStorageService = SecureLocalStorageService();
+
+    String? uuid = await secureLocalStorageService.getSecureStorage(key: 'uuid');
+    String? userName = await secureLocalStorageService.getSecureStorage(key: 'userName');
+
+    Map<String, String?> userInfo = {
+      'uuid': uuid,
+      'userName': userName,
+    };
+
+    return userInfo;
+  }
 }
 
 

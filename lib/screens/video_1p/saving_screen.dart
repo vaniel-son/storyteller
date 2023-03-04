@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:storyteller/models/story_session_model.dart';
+import 'package:storyteller/services/database_service.dart';
 import 'package:storyteller/services/general_service.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,8 +11,9 @@ import 'package:firebase_core/firebase_core.dart';
 
 class SavingScreen extends StatefulWidget {
   final String filePath;
+  final StorySessionModel storySession;
 
-  const SavingScreen({Key? key, required this.filePath}) : super(key: key);
+  const SavingScreen({Key? key, required this.filePath, required this.storySession}) : super(key: key);
 
   @override
   SavingScreenState createState() => SavingScreenState();
@@ -20,6 +23,9 @@ class SavingScreenState extends State<SavingScreen> {
   late VideoPlayerController _videoPlayerController;
   final _firebaseStorage = FirebaseStorage.instance;
   late String firebaseURL;
+
+  // init database services
+  DatabaseServices databaseServices = DatabaseServices();
 
   @override
   void dispose() {
@@ -33,8 +39,14 @@ class SavingScreenState extends State<SavingScreen> {
   }
 
   // save a record of the session to firestore
-  saveSession(){
+  saveSession() async {
+    // fetch user info
+
+
     // some set statement: date/time, video URL, user ID, prompt, promptType
+    databaseServices.saveSession(
+      uuid: 'xyz',
+    );
 
   }
 
