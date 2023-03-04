@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:storyteller/models/story_session_model.dart';
+import 'package:storyteller/screens/video_1p/saving_screen.dart';
 import 'package:storyteller/screens/video_1p/video_screen.dart';
 
 class CameraScreen extends StatefulWidget {
@@ -44,9 +45,11 @@ class CameraScreenState extends State<CameraScreen> {
 
       setState(() => _isRecording = false);
 
+      // redirect to saving screen
+
       final route = MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (_) => VideoScreen(filePath: file.path),
+        builder: (_) => SavingScreen(filePath: file.path),
       );
 
       if (mounted) {

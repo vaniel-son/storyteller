@@ -8,7 +8,7 @@ class DatabaseServices {
   /// ***********************************************************************
 
   /// Get example
-  Future<String> fetchNickname({userID}) async {
+  Future<String> getExample({userID}) async {
     final nicknameQuery = await FirebaseFirestore.instance
         .collection('users')
         .where('User_ID', isEqualTo: userID)
@@ -22,8 +22,25 @@ class DatabaseServices {
     }
   }
 
+  /// Add new user to users collection
+  Future<void> addExample(uid, nickname) async {
+    // reference to query users table
+    final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
+
+    // add a new user
+    return await userCollection
+        .doc(uid)
+        .set({
+      'uuid': uid, // John Doe
+      'username': nickname, // Stokes and Sons
+      'dateCreated': DateTime.now(),
+    })
+        .then((value) => print("User Added"))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
+
   /// Get snapshots example
-  Stream<QuerySnapshot> fetchAllUsers() {
+  Stream<QuerySnapshot> getSnapshotExample() {
     final Stream<QuerySnapshot> dataStream = FirebaseFirestore.instance
         .collection('users')
         .snapshots();
@@ -39,9 +56,56 @@ class DatabaseServices {
     await users.doc(userID).update({'Nickname': nickname});
   }
 
-  /// Add new record example
-  ///Create User record in database.
-  Future<void> addUser(uid, nickname) async {
+  /// Store file in firebase storage
+
+
+  /// Retrieve file in firebase storage
+
+  /// ***********************************************************************
+  /// ***********************************************************************
+  /// Users
+  /// ***********************************************************************
+  /// ***********************************************************************
+
+  /// Add new user to users collection
+  Future<void> addUser({required String uuid, required String userName}) async {
+    // reference to query users table
+    final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
+
+    // add a new user
+    return await userCollection
+        .doc(uuid)
+        .set({
+      'uuid': uuid, // John Doe
+      'username': userName, // Stokes and Sons
+      'dateCreated': DateTime.now(),
+    })
+        .then((value) => print("User Added"))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
+
+  // get username for a user
+  Future<String> fetchUserName({uuid}) async {
+    final userNameQuery = await FirebaseFirestore.instance
+        .collection('users')
+        .where('uuid', isEqualTo: uuid)
+        .get();
+
+    if (userNameQuery.docs.isEmpty) {
+      return 'Default';
+    } else {
+      var result = userNameQuery.docs.first.data();
+      return result['username'];
+    }
+  }
+
+  /// ***********************************************************************
+  /// ***********************************************************************
+  /// Other (TBD)
+  /// ***********************************************************************
+  /// ***********************************************************************
+
+  Future<void> saveSession(uid, nickname) async {
     /// collection reference to query users table
     final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
 
@@ -56,18 +120,5 @@ class DatabaseServices {
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
-
-  /// Store file in firebase storage
-
-
-  /// Retrieve file in firebase storage
-
-  /// ***********************************************************************
-  /// ***********************************************************************
-  /// TBD
-  /// ***********************************************************************
-  /// ***********************************************************************
-
-
 
 }

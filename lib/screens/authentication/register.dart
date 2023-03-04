@@ -1,8 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:storyteller/screens/authentication/profile_screen.dart';
 import 'package:storyteller/services/auth_service.dart';
+import 'package:storyteller/services/database_service.dart';
+import 'package:storyteller/services/local_storage_service.dart';
 import 'package:storyteller/services/validator_service.dart';
+import 'package:storyteller/wrapper.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -17,11 +21,14 @@ class RegisterScreenState extends State<RegisterScreen> {
   final _nameTextController = TextEditingController();
   final _emailTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
-
   final _focusName = FocusNode();
   final _focusEmail = FocusNode();
   final _focusPassword = FocusNode();
 
+  // init for database services
+  final DatabaseServices databaseServices = DatabaseServices();
+
+  // manages loading state toggling
   bool _isProcessing = false;
 
   @override
@@ -123,16 +130,18 @@ class RegisterScreenState extends State<RegisterScreen> {
                                     _isProcessing = false;
                                   });
 
+                                  // route user to wrapper, which manages where to route the user next
                                   if (user != null) {
+                                    // save user to users collection
+                                    await databaseServices.addUser(uuid: user.uid, userName: _nameTextController.text);
+
+                                    // save uuid and username to secure local storage so it can be easily retrieved later
+                                    AuthService.storeUserInSecureLocalStorage(uuid: user.uid, userName: _nameTextController.text);
+
+                                    // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => ProfileScreen(user: user),), ModalRoute.withName('/'),);
                                     if (mounted) {
-                                      Navigator.of(context)
-                                          .pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ProfileScreen(user: user),
-                                        ),
-                                        ModalRoute.withName('/'),
-                                      );
+                                      Navigator.pushAndRemoveUntil(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: const Wrapper()),
+                                              (Route<dynamic> route) => false);
                                     }
                                   } else {
                                     if (mounted) {

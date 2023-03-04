@@ -1,9 +1,15 @@
 import 'dart:developer';
-
+// import 'dart:html';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:openai_client/openai_client.dart';
+import 'package:uuid/uuid.dart';
 import '../env/env.dart';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:storyteller/services/general_service.dart';
+import 'package:video_player/video_player.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class GeneralService {
   // Initialize DB object with methods to call DB
@@ -92,5 +98,28 @@ class GeneralService {
     );
   }
 
-  // Init firebase
+  static randomUUID(){
+    var uuidObject = const Uuid();
+    var uuid = uuidObject.v4();
+    return uuid;
+  }
+
+  static Future<String> uploadVideo(String filePath) async {
+    File file = File(filePath); // set file object
+    var videoUUID = GeneralService.randomUUID(); // create a new uuid for video file name
+    var videoName = videoUUID + '.mp4'; // set video file name
+
+    late String firebaseURL; // stores the url of the file's location in firebase
+    final firebaseStorage = FirebaseStorage.instance;
+
+    try {
+      var snapshot = await firebaseStorage.ref().child('videos/$videoUUID.mp4').putFile(File(filePath));
+      firebaseURL = await snapshot.ref.getDownloadURL();
+    } catch (e) {
+      print('upload error');
+      print(e);
+    }
+
+    return firebaseURL;
+  }
 }

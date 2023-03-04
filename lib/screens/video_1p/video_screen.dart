@@ -8,10 +8,10 @@ class VideoScreen extends StatefulWidget {
   const VideoScreen({Key? key, required this.filePath}) : super(key: key);
 
   @override
-  _VideoScreenState createState() => _VideoScreenState();
+  VideoScreenState createState() => VideoScreenState();
 }
 
-class _VideoScreenState extends State<VideoScreen> {
+class VideoScreenState extends State<VideoScreen> {
   late VideoPlayerController _videoPlayerController;
 
   @override
@@ -21,6 +21,7 @@ class _VideoScreenState extends State<VideoScreen> {
   }
 
   Future _initVideoPlayer() async {
+    print('video path: ${widget.filePath}');
     _videoPlayerController = VideoPlayerController.file(File(widget.filePath));
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);

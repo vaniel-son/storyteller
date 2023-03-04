@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:storyteller/services/local_storage_service.dart';
 import 'package:storyteller/wrapper.dart';
 
 class AuthService {
@@ -16,10 +17,12 @@ class AuthService {
   }
 
   // Use this method on each page where login is required
-  static checkUserLoginStatus(context){
+  static checkUserLoginStatus(context) {
     FirebaseAuth auth = FirebaseAuth.instance;
     if (auth.currentUser == null) {
-      return Navigator.pushAndRemoveUntil(context, PageTransition(type: PageTransitionType.leftToRightWithFade, child: const Wrapper()), (Route<dynamic> route) => false);
+      return Navigator.pushAndRemoveUntil(
+          context, PageTransition(type: PageTransitionType.leftToRightWithFade, child: const Wrapper()), (
+          Route<dynamic> route) => false);
     } else {
       return true;
     }
@@ -90,8 +93,19 @@ class AuthService {
   static Future<void> signOut() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     await auth.signOut();
+
+    // delete uuid and username from secure local storage
+    SecureLocalStorageService secureLocalStorageService = SecureLocalStorageService();
+    secureLocalStorageService.deleteSecureStorageItem(key: 'uuid');
+    secureLocalStorageService.deleteSecureStorageItem(key: 'userName');
+  }
+
+  static Future<void> storeUserInSecureLocalStorage({required String uuid, required String userName}) async {
+    SecureLocalStorageService secureLocalStorageService = SecureLocalStorageService();
+
+    await secureLocalStorageService.setSecureStorage(key: 'uuid', value: uuid);
+    await secureLocalStorageService.setSecureStorage(key: 'userName', value: userName);
   }
 }
-
 
 

@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:storyteller/services/auth_service.dart';
+import 'package:storyteller/services/database_service.dart';
+import 'package:storyteller/services/local_storage_service.dart';
 import 'package:storyteller/services/validator_service.dart';
 import 'package:storyteller/wrapper.dart';
 
@@ -20,10 +22,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   final _formKey = GlobalKey<FormState>();
-
   final _emailTextController = TextEditingController();
-
   final _passwordTextController = TextEditingController();
+
+  // init for database services
+  final DatabaseServices databaseServices = DatabaseServices();
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +85,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 context: context,
                               );
                               if (user != null) {
+                                // retrieve the user from the user table (contains username)
+                                String userName = await databaseServices.fetchUserName(uuid: user.uid);
+
+                                // save uuid and username to secure local storage so it can be easily retrieved later
+                                AuthService.storeUserInSecureLocalStorage(uuid: user.uid, userName: userName);
+
+                                // route to 'wrapper' which manages where to route a logged in user
                                 if (mounted) {
                                   Navigator.pushAndRemoveUntil(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: const Wrapper()),
                                           (Route<dynamic> route) => false);
