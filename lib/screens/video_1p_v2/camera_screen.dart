@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:storyteller/menu_screen.dart';
 import 'package:storyteller/models/story_session_model.dart';
-import 'package:storyteller/screens/video_1p/saving_screen.dart';
-import 'package:storyteller/screens/video_1p/video_screen.dart';
+import 'package:storyteller/screens/video_1p_v2/saving_screen.dart';
 import 'package:storyteller/constants.dart' as constants;
 import 'package:storyteller/services/local_storage_service.dart';
 import 'package:storyteller/services/storyPrompt_service.dart';
@@ -80,8 +79,9 @@ class CameraScreenState extends State<CameraScreen> {
       );
 
       if (mounted) {
-        Navigator.push(context, route);
+        Navigator.pushReplacement(context, route);
       }
+
     } else {
       await _cameraController.prepareForVideoRecording();
       await _cameraController.startVideoRecording();

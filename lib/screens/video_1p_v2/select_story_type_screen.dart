@@ -28,13 +28,14 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
 
   selectOption(String storyPromptType) async {
     await secureLocalStorageService.setSecureStorage(key: 'storyPromptType', value: storyPromptType);
+    storySession.storyPromptType = storyPromptType;
 
     if (mounted) {
       Navigator.push(
           context, PageTransition(type: PageTransitionType.bottomToTop, child: CameraScreen(storySession: storySession)));
     }
 
-    storySession.storyPromptType = storyPromptType;
+    return CameraScreen(storySession: storySession);
   }
 
   late String? currentStoryPromptTypeSelected = 'none';

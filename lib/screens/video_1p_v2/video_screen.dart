@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:storyteller/screens/video_1p_v2/select_story_type_screen.dart';
 import 'package:storyteller/wrapper.dart';
 import 'package:video_player/video_player.dart';
 
@@ -44,7 +45,7 @@ class VideoScreenState extends State<VideoScreen> {
                 if (mounted) {
                   Navigator.pushAndRemoveUntil(
                       context,
-                      PageTransition(type: PageTransitionType.rightToLeftWithFade, child: const Wrapper()),
+                      PageTransition(type: PageTransitionType.rightToLeftWithFade, child: const SelectStoryTypeScreen()),
                       (Route<dynamic> route) => false);
                 }
               })

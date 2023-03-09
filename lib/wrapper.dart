@@ -17,7 +17,6 @@ class Wrapper extends StatelessWidget {
   }
 
   // init for database services
-  
   Future<bool> saveUserInLocalStorage() async {
     UserModel user = await AuthService.getUserFromSecureLocalStorage();
     if (user.uuid == null) {
@@ -42,7 +41,10 @@ class Wrapper extends StatelessWidget {
             if (snapshot.hasData) {
               return const SelectStoryTypeScreen();
             } else {
-              return const CircularProgressIndicator();
+              return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: const CircularProgressIndicator());
             }
           });
     }

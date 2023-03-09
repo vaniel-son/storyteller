@@ -62,9 +62,11 @@ class SavingScreenState extends State<SavingScreen> {
       builder: (_) => VideoScreen(filePath: widget.filePath),
     );
 
-    if (mounted) {
+    /*if (mounted) {
       Navigator.push(context, route);
-    }
+    }*/
+
+    return VideoScreen(filePath: widget.filePath);
 
   }
 

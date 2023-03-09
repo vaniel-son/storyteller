@@ -63,7 +63,7 @@ class SavingScreenState extends State<SavingScreen> {
     );
 
     if (mounted) {
-      Navigator.push(context, route);
+      Navigator.pushReplacement(context, route);
     }
 
   }
