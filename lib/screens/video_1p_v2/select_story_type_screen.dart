@@ -3,7 +3,9 @@ import 'package:page_transition/page_transition.dart';
 import 'package:storyteller/menu_screen.dart';
 import 'package:storyteller/models/story_session_model.dart';
 import 'package:storyteller/screens/select_story_screen.dart';
+import 'package:storyteller/screens/video_1p_v2/camera_screen.dart';
 import 'package:storyteller/services/auth_service.dart';
+import 'package:storyteller/services/local_storage_service.dart';
 import 'package:storyteller/services/openai_service.dart';
 import 'package:storyteller/services/general_service.dart';
 import 'package:storyteller/constants.dart' as constants;
@@ -19,20 +21,39 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
   String roomName = '';
 
   GeneralService generalService = GeneralService();
-  OpenAIService openAIService = OpenAIService();
+  SecureLocalStorageService secureLocalStorageService = SecureLocalStorageService();
   StorySessionModel storySession = StorySessionModel();
 
   bool isLoading = false;
 
-  selectOption(String storyPromptType){
-    storySession.storyPromptType = storyPromptType; // set the story category type
+  selectOption(String storyPromptType) async {
+    await secureLocalStorageService.setSecureStorage(key: 'storyPromptType', value: storyPromptType);
 
-    Navigator.push(
-        context, PageTransition(type: PageTransitionType.bottomToTop, child: SelectStoryScreen(storySession: storySession)));
+    if (mounted) {
+      Navigator.push(
+          context, PageTransition(type: PageTransitionType.bottomToTop, child: CameraScreen(storySession: storySession)));
+    }
+
+    storySession.storyPromptType = storyPromptType;
+  }
+
+  late String? currentStoryPromptTypeSelected = 'none';
+
+  determineCurrentOptionSelected() async {
+    currentStoryPromptTypeSelected = await secureLocalStorageService.getSecureStorage(key: 'storyPromptType');
+
+    // set default item if not set
+    if (currentStoryPromptTypeSelected == null) {
+      await secureLocalStorageService.setSecureStorage(key: 'storyPromptType', value: constants.StoryPromptType.pregnancy);
+    }
+
+    setState(() {
+
+    });
   }
 
   menuAction() {
-    Navigator.push(context, PageTransition(type: PageTransitionType.leftToRightWithFade, child: Menu()));
+    Navigator.push(context, PageTransition(type: PageTransitionType.leftToRightWithFade, child: const Menu()));
   }
 
   @override
@@ -42,7 +63,7 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        // title: const Text('Video Room'),
+        title: const Text('Solo Storyteller'),
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {
@@ -80,9 +101,11 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
                             child: SizedBox(
                               height: 200,
                               child: Card(
+                                color: (currentStoryPromptTypeSelected == constants.StoryPromptType.pregnancy) ? Colors.lightBlue: Colors.white10,
                                 child: InkWell(
                                   onTap: (){
                                     selectOption(constants.StoryPromptType.pregnancy); // true = created room
+                                    determineCurrentOptionSelected();
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(24.0),
@@ -111,9 +134,11 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
                             child: SizedBox(
                               height: 200,
                               child: Card(
+                                color: (currentStoryPromptTypeSelected == constants.StoryPromptType.parentOfToddler) ? Colors.lightBlue: Colors.white10,
                                 child: InkWell(
                                   onTap: (){
                                     selectOption(constants.StoryPromptType.parentOfToddler); // false = joins a room
+                                    determineCurrentOptionSelected();
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(24.0),
@@ -143,9 +168,11 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
                             child: SizedBox(
                               height: 200,
                               child: Card(
+                                color: (currentStoryPromptTypeSelected == constants.StoryPromptType.general) ? Colors.lightBlue: Colors.white10,
                                 child: InkWell(
                                   onTap: (){
                                     selectOption(constants.StoryPromptType.general); // true = created room
+                                    determineCurrentOptionSelected();
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(24.0),
@@ -170,7 +197,7 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
                               ),
                             ),
                           ),
-                          Expanded(
+/*                          Expanded(
                             child: SizedBox(
                               height: 200,
                               child: Card(
@@ -185,9 +212,9 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: const [
-                                          /*SizedBox(
+                                          *//*SizedBox(
                                                   height: 30,
-                                                  child: Lottie.network('https://assets6.lottiefiles.com/packages/lf20_fivxlkum.json')),*/
+                                                  child: Lottie.network('https://assets6.lottiefiles.com/packages/lf20_fivxlkum.json')),*//*
                                           Icon(
                                             Icons.festival_rounded,
                                             color: Colors.yellow,
@@ -200,7 +227,7 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
                                 ),
                               ),
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                       const SizedBox(height: 8),

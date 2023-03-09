@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math';
 // import 'dart:html';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,11 @@ class GeneralService {
   }
 
   static displaySnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      duration: const Duration(seconds: 3),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   Future<void> openAIService(context) async {
@@ -71,7 +77,7 @@ class GeneralService {
     )
         .data;
     // Print the image.
-    log(image.toString());
+    // log(image.toString());
 
     // Create an embedding.
     final embedding = await client.embeddings.create(
@@ -102,6 +108,12 @@ class GeneralService {
     var uuidObject = const Uuid();
     var uuid = uuidObject.v4();
     return uuid;
+  }
+
+  /// Generate a random int number
+  static int getRandomNumber(int maxNumber) {
+    Random random = Random();
+    return random.nextInt(maxNumber);
   }
 
   static Future<String> uploadVideo(String filePath) async {

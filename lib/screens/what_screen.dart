@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:storyteller/screens/authentication/login_screen.dart';
 import 'package:storyteller/screens/authentication/register.dart';
-import 'package:storyteller/screens/select_story_type_screen.dart';
+import 'package:storyteller/screens/video_1p_v2/select_story_type_screen.dart';
 import 'package:storyteller/services/auth_service.dart';
 import 'package:storyteller/widgets/button_widget.dart';
 import 'package:lottie/lottie.dart';

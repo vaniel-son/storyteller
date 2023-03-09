@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:storyteller/screens/select_story_type_screen.dart';
+import 'package:storyteller/screens/video_1p_v2/select_story_type_screen.dart';
+import 'package:storyteller/screens/video_1p_v2/camera_screen.dart';
 import 'package:storyteller/screens/what_screen.dart';
 
 class Wrapper extends StatelessWidget {

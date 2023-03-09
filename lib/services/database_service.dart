@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:storyteller/models/your_story_model.dart';
 import 'package:storyteller/services/general_service.dart';
 
 class DatabaseServices {
@@ -127,6 +128,38 @@ class DatabaseServices {
     })
         .then((value) => print("story session Added"))
         .catchError((error) => print("Failed to story session: $error"));
+  }
+
+  // Query firebase to return a collection of documents and then convert that to a list of maps
+  Future<List<YourStoryModel>> getPlayerStories({required String uuid}) async {
+    final playerStoryListResults = await FirebaseFirestore.instance
+        .collection('storySessions')
+        .where('uuid', isEqualTo: uuid)
+        .orderBy('dateCreated', descending: true)
+        .limit(10)
+        .get();
+
+    List<YourStoryModel> result = [];
+    if (playerStoryListResults.docs.isNotEmpty) {
+      for (var doc in playerStoryListResults.docs) {
+        //result.add(doc.data());
+
+        // add to story session model
+        YourStoryModel yourStoryModel = YourStoryModel(
+          id: doc.data()['id'],
+          sessionType: doc.data()['sessionType'],
+          storyPrompt: doc.data()['storyPrompt'],
+          storyPromptType: doc.data()['storyPromptType'],
+          userName: doc.data()['userName'],
+          videoURL: doc.data()['videoURL'],
+        );
+        result.add(yourStoryModel);
+
+        print('yourStoryModel: ${yourStoryModel.id}');
+      }
+    }
+
+    return result;
   }
 
 }

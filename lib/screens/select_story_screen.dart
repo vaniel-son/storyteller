@@ -54,7 +54,7 @@ class _SelectStoryScreenState extends State<SelectStoryScreen> {
     widget.storySession.storyPrompt = storyPrompt; // store story prompt in the object
 
     Navigator.push(
-        context, PageTransition(type: PageTransitionType.bottomToTop, child: JoinOrCreateRoomScreen(storySession: widget.storySession)));
+        context, PageTransition(type: PageTransitionType.bottomToTop, child: const JoinOrCreateRoomScreen()));
   }
 
   @override

@@ -9,9 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:storyteller/constants.dart' as constants;
 
 class JoinOrCreateRoomScreen extends StatefulWidget {
-  const JoinOrCreateRoomScreen({Key? key, required this.storySession}) : super(key: key);
-
-  final StorySessionModel storySession;
+  const JoinOrCreateRoomScreen({Key? key}) : super(key: key);
 
   @override
   State<JoinOrCreateRoomScreen> createState() => _JoinOrCreateRoomScreenState();
@@ -22,21 +20,22 @@ class _JoinOrCreateRoomScreenState extends State<JoinOrCreateRoomScreen> {
 
   GeneralService generalService = GeneralService();
   OpenAIService openAIService = OpenAIService();
+  StorySessionModel storySession = StorySessionModel();
 
   bool isLoading = false;
 
   selectOption(bool create){
-    widget.storySession.create = create; // true for creating, false for joining
-    widget.storySession.sessionType = constants.SessionType.twoPlayers; // set session type
+    storySession.create = create; // true for creating, false for joining
+    storySession.sessionType = constants.SessionType.twoPlayers; // set session type
 
     Navigator.push(
-        context, PageTransition(type: PageTransitionType.bottomToTop, child: InputRoomName(storySession: widget.storySession)));
+        context, PageTransition(type: PageTransitionType.bottomToTop, child: InputRoomName(storySession: storySession)));
   }
 
   soloCampfireButton(){
-    widget.storySession.sessionType = constants.SessionType.solo;
+    storySession.sessionType = constants.SessionType.solo;
     Navigator.push(
-        context, PageTransition(type: PageTransitionType.bottomToTop, child: CameraScreen(storySession: widget.storySession,)));
+        context, PageTransition(type: PageTransitionType.bottomToTop, child: CameraScreen(storySession: storySession,)));
   }
 
   @override
@@ -154,7 +153,7 @@ class _JoinOrCreateRoomScreenState extends State<JoinOrCreateRoomScreen> {
                           ),
                         ],
                       ),
-                      Row(
+/*                      Row(
                         children: [
                           Expanded(
                             child: SizedBox(
@@ -171,9 +170,9 @@ class _JoinOrCreateRoomScreenState extends State<JoinOrCreateRoomScreen> {
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          /*SizedBox(
+                                          *//*SizedBox(
                                                   height: 30,
-                                                  child: Lottie.network('https://assets6.lottiefiles.com/packages/lf20_fivxlkum.json')),*/
+                                                  child: Lottie.network('https://assets6.lottiefiles.com/packages/lf20_fivxlkum.json')),*//*
                                           Row(
                                             children: const [
                                               Icon(
@@ -198,7 +197,7 @@ class _JoinOrCreateRoomScreenState extends State<JoinOrCreateRoomScreen> {
                             ),
                           ),
                         ],
-                      ),
+                      ),*/
                       const SizedBox(height: 8),
 
 /*            ElevatedButton(
