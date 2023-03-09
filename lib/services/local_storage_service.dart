@@ -1,16 +1,5 @@
-import 'dart:developer';
-// import 'dart:html';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:openai_client/openai_client.dart';
-import 'package:uuid/uuid.dart';
-import '../env/env.dart';
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:storyteller/services/general_service.dart';
-import 'package:video_player/video_player.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SecureLocalStorageService {
   // Initialize DB object with methods to call DB
@@ -39,4 +28,17 @@ class SecureLocalStorageService {
     Future<void> value = storage.delete(key: key);
     return value;
   }
+
+  Future<void> saveStorage({required String name, required String value}) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(name, value);
+  }
+
+  Future<String?> readStorageItem({required String name}) async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? item = prefs.getString(name);
+
+    return item;
+  }
+
 }
