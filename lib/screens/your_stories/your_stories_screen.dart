@@ -4,7 +4,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:storyteller/menu_screen.dart';
 import 'package:storyteller/models/user_model.dart';
 import 'package:storyteller/models/your_story_model.dart';
-import 'package:storyteller/screens/join_or_create_screen.dart';
+import 'package:storyteller/screens/video_2p/join_or_create_screen.dart';
 import 'package:storyteller/models/story_session_model.dart';
 import 'package:storyteller/screens/your_stories/yoyur_stories_video_screen.dart';
 import 'package:storyteller/services/auth_service.dart';

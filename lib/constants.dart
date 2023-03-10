@@ -3,6 +3,7 @@ class StoryPromptType {
   static const String parentOfToddler = 'parent of toddler';
   static const String parentOfAnAdult = 'parent of an adult';
   static const String general = 'general';
+  static const String acting = 'acting';
 }
 
 class SessionType {

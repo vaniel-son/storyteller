@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:storyteller/screens/join_or_create_screen.dart';
+import 'package:storyteller/screens/video_2p/join_or_create_screen.dart';
 import 'package:storyteller/models/story_session_model.dart';
 import 'package:storyteller/services/general_service.dart';
 import 'package:lottie/lottie.dart';

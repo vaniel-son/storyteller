@@ -2,33 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:storyteller/menu_screen.dart';
 import 'package:storyteller/models/story_session_model.dart';
-import 'package:storyteller/screens/select_story_screen.dart';
-import 'package:storyteller/screens/video_1p_v2/camera_screen.dart';
+import 'package:storyteller/screens/video_2p/join_or_create_screen.dart';
+import 'package:storyteller/screens/video_2p/video_chat_screen.dart';
 import 'package:storyteller/services/auth_service.dart';
 import 'package:storyteller/services/local_storage_service.dart';
-import 'package:storyteller/services/openai_service.dart';
 import 'package:storyteller/services/general_service.dart';
 import 'package:storyteller/constants.dart' as constants;
+import 'package:storyteller/services/storyPrompt_service.dart';
 
-class SelectStoryTypeScreen extends StatefulWidget {
-  const SelectStoryTypeScreen({Key? key}) : super(key: key);
+class SelectStoryType2PScreen extends StatefulWidget {
+  const SelectStoryType2PScreen({Key? key, required this.storySession}) : super(key: key);
+
+  final StorySessionModel storySession;
 
   @override
-  State<SelectStoryTypeScreen> createState() => _SelectStoryTypeScreenState();
+  State<SelectStoryType2PScreen> createState() => _SelectStoryType2PScreenState();
 }
 
-class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
+class _SelectStoryType2PScreenState extends State<SelectStoryType2PScreen> {
   String roomName = '';
 
   GeneralService generalService = GeneralService();
   SecureLocalStorageService secureLocalStorageService = SecureLocalStorageService();
   StorySessionModel storySession = StorySessionModel();
+  StoryPromptService storyPromptService = StoryPromptService();
   late String? currentStoryPromptTypeSelected = 'none';
-
   bool isLoading = false;
 
   selectOption(String storyPromptType) async {
-    storySession.storyPromptType = storyPromptType;
+    // await secureLocalStorageService.setSecureStorage(key: 'storyPromptType', value: storyPromptType);
+    storySession.storyPromptType = storyPromptType; // update story object for use on next screen
+
+    // set story prompt based on the type
+    storySession.storyPrompt = storyPromptService.setStoryPrompt(storySession.storyPromptType);
 
     // ux: change color of selected item
     currentStoryPromptTypeSelected = storySession.storyPromptType;
@@ -38,10 +44,8 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
 
     if (mounted) {
       Navigator.push(
-          context, PageTransition(type: PageTransitionType.bottomToTop, child: CameraScreen(storySession: storySession)));
+          context, PageTransition(type: PageTransitionType.bottomToTop, child: VideoChat(storySession: storySession)));
     }
-
-    return CameraScreen(storySession: storySession);
   }
 
   menuAction() {
@@ -55,7 +59,7 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Solo Storyteller'),
+        title: const Text('2 Player Storyteller'),
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {
@@ -93,78 +97,10 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
                             child: SizedBox(
                               height: 200,
                               child: Card(
-                                color: (currentStoryPromptTypeSelected == constants.StoryPromptType.pregnancy) ? Colors.lightBlue: Colors.white10,
-                                child: InkWell(
-                                  onTap: (){
-                                    selectOption(constants.StoryPromptType.pregnancy); // true = created room
-                                    //determineCurrentOptionSelected();
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(24.0),
-                                    child: SizedBox.expand(
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: const [
-                                          /*SizedBox(
-                                                  height: 30,
-                                                  child: Lottie.network('https://assets6.lottiefiles.com/packages/lf20_fivxlkum.json')),*/
-                                          Icon(
-                                            Icons.pregnant_woman,
-                                            color: Colors.yellow,
-                                            size: 30.0,
-                                          ),
-                                          Text('During Pregnancy', style: TextStyle(fontSize: 18))],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: SizedBox(
-                              height: 200,
-                              child: Card(
-                                color: (currentStoryPromptTypeSelected == constants.StoryPromptType.parentOfToddler) ? Colors.lightBlue: Colors.white10,
-                                child: InkWell(
-                                  onTap: (){
-                                    selectOption(constants.StoryPromptType.parentOfToddler); // false = joins a room
-                                    //determineCurrentOptionSelected();
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(24.0),
-                                    child: SizedBox.expand(
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: const [
-                                          Icon(
-                                            Icons.child_care,
-                                            color: Colors.yellow,
-                                            size: 30.0,
-                                          ),
-                                          Text('Parent of a toddler', style: TextStyle(fontSize: 18),)],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: SizedBox(
-                              height: 200,
-                              child: Card(
                                 color: (currentStoryPromptTypeSelected == constants.StoryPromptType.general) ? Colors.lightBlue: Colors.white10,
                                 child: InkWell(
                                   onTap: (){
                                     selectOption(constants.StoryPromptType.general); // true = created room
-                                    //determineCurrentOptionSelected();
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(24.0),
@@ -189,13 +125,14 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
                               ),
                             ),
                           ),
-/*                          Expanded(
+                          Expanded(
                             child: SizedBox(
                               height: 200,
                               child: Card(
+                                color: (currentStoryPromptTypeSelected == constants.StoryPromptType.acting) ? Colors.lightBlue: Colors.white10,
                                 child: InkWell(
                                   onTap: (){
-                                    selectOption(constants.StoryPromptType.general); // true = created room
+                                    selectOption(constants.StoryPromptType.acting); // false = joins a room
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(24.0),
@@ -204,32 +141,22 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: const [
-                                          *//*SizedBox(
-                                                  height: 30,
-                                                  child: Lottie.network('https://assets6.lottiefiles.com/packages/lf20_fivxlkum.json')),*//*
                                           Icon(
-                                            Icons.festival_rounded,
+                                            Icons.theater_comedy,
                                             color: Colors.yellow,
                                             size: 30.0,
                                           ),
-                                          Text('Actors in a play', style: TextStyle(fontSize: 18))],
+                                          Text('Acting', style: TextStyle(fontSize: 18),)],
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),*/
+                          ),
                         ],
                       ),
                       const SizedBox(height: 8),
-
-/*            ElevatedButton(
-                    onPressed: () {
-                    join();
-                    },
-                    child: const Text('Join'),
-                  ),*/
                     ],
                   ),
                 )

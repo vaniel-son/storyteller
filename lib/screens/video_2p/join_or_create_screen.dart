@@ -25,17 +25,16 @@ class _JoinOrCreateRoomScreenState extends State<JoinOrCreateRoomScreen> {
   bool isLoading = false;
 
   selectOption(bool create){
+    // if you create a room, then you will pick the story and bring it to the video chat
     storySession.create = create; // true for creating, false for joining
     storySession.sessionType = constants.SessionType.twoPlayers; // set session type
 
+    // if create = true, then route to story selection screen first
+
+    // if crate = false, then go directly to the video chat room
+
     Navigator.push(
         context, PageTransition(type: PageTransitionType.bottomToTop, child: InputRoomName(storySession: storySession)));
-  }
-
-  soloCampfireButton(){
-    storySession.sessionType = constants.SessionType.solo;
-    Navigator.push(
-        context, PageTransition(type: PageTransitionType.bottomToTop, child: CameraScreen(storySession: storySession,)));
   }
 
   @override

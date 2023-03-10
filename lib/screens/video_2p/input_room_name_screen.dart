@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:storyteller/models/story_session_model.dart';
+import 'package:storyteller/screens/video_2p/select_story_type_2p_screen.dart';
 import 'package:storyteller/widgets/button_widget.dart';
 import 'package:storyteller/services/general_service.dart';
 import 'package:storyteller/screens/video_2p/video_chat_screen.dart';
@@ -29,7 +30,7 @@ class _InputRoomNameState extends State<InputRoomName> {
       GeneralService.displaySnackBar(context, 'Enter a room name');
     } else {
       // navigate to the video chat screen
-      Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: VideoChat(roomName: channelName, storySession: widget.storySession)));
+      Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: SelectStoryType2PScreen(storySession: widget.storySession)));
     }
   }
 

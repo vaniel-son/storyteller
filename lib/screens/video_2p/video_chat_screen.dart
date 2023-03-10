@@ -1,6 +1,9 @@
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
 import 'package:storyteller/models/story_session_model.dart';
+import 'package:storyteller/style/colors.dart';
+import 'package:storyteller/style/style_misc.dart';
+import 'package:storyteller/constants.dart' as constants;
 
 const String appId = "314afbc9a3bf4d0ead3e840ce212515c";
 String channelName = '<--Insert channel name here-->';
@@ -10,9 +13,8 @@ String serverUrl =
     "https://agora-token-service-production-c810.up.railway.app"; // For example, "https://agora-token-service-production-92ff.up.railway.app"
 
 class VideoChat extends StatefulWidget {
-  const VideoChat({Key? key, required this.roomName, required this.storySession}) : super(key: key);
+  const VideoChat({Key? key, required this.storySession}) : super(key: key);
 
-  final String roomName;
   final StorySessionModel storySession;
 
   @override
@@ -29,6 +31,7 @@ class _VideoChatState extends State<VideoChat> {
     ),
   );*/
   late AgoraClient client;
+  double storyPromptFontSize = 14;
 
   @override
   void initState() {
@@ -41,7 +44,7 @@ class _VideoChatState extends State<VideoChat> {
     client = AgoraClient(
       agoraConnectionData: AgoraConnectionData(
         appId: appId,
-        channelName: widget.roomName,
+        channelName: widget.storySession.roomName,
         tokenUrl: serverUrl,
         uid: uid,
       ),
@@ -50,6 +53,14 @@ class _VideoChatState extends State<VideoChat> {
 
   void initAgora() async {
     await client.initialize();
+  }
+
+  void determineFontSize() {
+    if (widget.storySession.storyPromptType == constants.StoryPromptType.acting) {
+      storyPromptFontSize = 14.0;
+    } else if (widget.storySession.storyPromptType == constants.StoryPromptType.general) {
+      storyPromptFontSize = 48.0;
+    }
   }
 
   @override
@@ -63,18 +74,6 @@ class _VideoChatState extends State<VideoChat> {
         body: SafeArea(
           child: Stack(
             children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-                decoration: const BoxDecoration(
-                  color: Colors.grey,
-                  //borderRadius: roundCornersRadius(),
-                ),
-                child: Text(
-                  widget.storySession.storyPrompt,
-                  style: const TextStyle(color: Colors.white, fontSize: 12),
-                ),
-                //Text('  Personal Record: $personalRecord  ', style: Theme.of(context).textTheme.caption)
-              ),
               AgoraVideoViewer(
                 client: client,
                 layoutType: Layout.floating,
@@ -86,6 +85,55 @@ class _VideoChatState extends State<VideoChat> {
                   Navigator.pop(context);
                 },
               ),
+            Container(
+              height: MediaQuery.of(context).size.height - 300,
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+              padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+              decoration: BoxDecoration(
+                color: surfaceColorTransparent1,
+                borderRadius: borderRadius2(),
+                // borderRadius: roundCornersRadius(),
+              ),
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  SliverToBoxAdapter(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Visibility(
+                          visible: (widget.storySession.storyPromptType == constants.StoryPromptType.acting),
+                          child: Column(
+                            children: [
+                              Text(
+                                widget.storySession.storyPrompt,
+                                style: const TextStyle(color: Colors.white, fontSize: 14.0),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Visibility(
+                          visible: (widget.storySession.storyPromptType == constants.StoryPromptType.general),
+                          child: Column(
+                            children: [
+                              const Text(
+                                'Tell a story about...',
+                                style: TextStyle(color: Colors.white, fontSize: 48),
+                              ),
+                              Text(
+                                widget.storySession.storyPrompt,
+                                style: const TextStyle(color: Colors.white, fontSize: 14.0),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              //Text('  Personal Record: $personalRecord  ', style: Theme.of(context).textTheme.caption)
+            ),
             ],
           ),
         ),

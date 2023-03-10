@@ -28,6 +28,8 @@ class StoryPromptService {
       return getRandomParentOfToddlerStoryPrompt();
     } else if (storyPromptType == constants.StoryPromptType.general) {
       return getRandomGeneralStoryPrompt();
+    } else if (storyPromptType == constants.StoryPromptType.acting) {
+      return getRandomActingStoryPrompt();
     } else {
       return 'error';
     }
@@ -99,12 +101,14 @@ class StoryPromptService {
     return storyPrompt[randomNumber];
   }
 
+
+
   String getRandomGeneralStoryPrompt(){
-    String storyPrompt1 = '2Surprising moment this week about pregnancy';
-    String storyPrompt2 = '2Who made you feel grateful this week';
-    String storyPrompt3 = '2Who you could throw into a dumpster';
-    String storyPrompt4 = '2Your food cravings this past week';
-    String storyPrompt5 = '2Someone interesting you met this week';
+    String storyPrompt1 = 'I am... [fill in the blank]';
+    String storyPrompt2 = 'Throughout my life, I have been haunted by [fill in the blank]';
+    String storyPrompt3 = 'Everywhere I go, I [fill in the blank]';
+    String storyPrompt4 = 'I secretly love [fill in the blank]';
+    String storyPrompt5 = 'I secretly hate [fill in the blank]';
 
     List storyPrompt = [storyPrompt1, storyPrompt2, storyPrompt3, storyPrompt4, storyPrompt5];
 
@@ -114,6 +118,50 @@ class StoryPromptService {
     }
 
     return storyPrompt[randomNumber];
+  }
+
+  String getRandomActingStoryPrompt(){
+    String storyPrompt1 = ''
+        'Actor 1: abc def ghi jkl mno pqr stu abc def ghi jkl mno pqr stu abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 1: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 1: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 1: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 1: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 1: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 1: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 1: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 1: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 1: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 1: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 1: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 1: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 1: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 1: abc def ghi jkl mno pqr stu\n\n'
+        'Actor 2: abc def ghi jkl mno pqr stu\n\n'
+    ;
+
+    List storyPrompt = [storyPrompt1];
+
+    int randomNumber = GeneralService.getRandomNumber(6);
+    if (randomNumber > 4) {
+      randomNumber = 4;
+    }
+
+    return storyPrompt[0];
   }
 
   String getRandomParentOfToddlerStoryPrompt(){

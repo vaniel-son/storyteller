@@ -45,14 +45,6 @@ class CameraScreenState extends State<CameraScreen> {
   _updateStoryObject() async {
     widget.storySession.sessionType = constants.SessionType.solo;
 
-    // set default story prompt type
-    // widget.storySession.storyPromptType = constants.StoryPromptType.pregnancy;
-
-    // set default item if not set
-    /*if (currentStoryPromptTypeSelected == null) {
-      await secureLocalStorageService.setSecureStorage(key: 'storyPromptType', value: constants.StoryPromptType.pregnancy);
-    }*/
-
     // set story prompt based on the type
     widget.storySession.storyPrompt = storyPromptService.setStoryPrompt(widget.storySession.storyPromptType);
   }
