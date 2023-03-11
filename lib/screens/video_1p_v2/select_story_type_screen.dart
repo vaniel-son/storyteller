@@ -85,7 +85,7 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
                     //crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       // Lottie.network('https://assets10.lottiefiles.com/private_files/lf30_gqirhcr7.json', fit: BoxFit.contain),
-                      const Text('What type of story will you tell?', style: TextStyle(fontSize: 18)),
+                      const Text('Choose a story type', style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
                       const SizedBox(height: 20),
                       Row(
                         children: [
@@ -114,7 +114,7 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
                                             color: Colors.yellow,
                                             size: 30.0,
                                           ),
-                                          Text('During Pregnancy', style: TextStyle(fontSize: 18))],
+                                          Text('Pregnancy', style: TextStyle(fontSize: 18))],
                                       ),
                                     ),
                                   ),
@@ -122,7 +122,7 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
                               ),
                             ),
                           ),
-                          Expanded(
+/*                          Expanded(
                             child: SizedBox(
                               height: 200,
                               child: Card(
@@ -151,7 +151,7 @@ class _SelectStoryTypeScreenState extends State<SelectStoryTypeScreen> {
                                 ),
                               ),
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                       Row(

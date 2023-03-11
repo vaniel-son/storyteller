@@ -36,33 +36,33 @@ class StoryPromptService {
   }
 
   String getRandomPregnancyStoryPrompt(){
-    String storyPrompt1 = 'a surprising moment this week about pregnancy';
-    String storyPrompt2 = 'who made you feel grateful this week';
-    String storyPrompt3 = 'who you could throw into a dumpster';
-    String storyPrompt4 = 'your food cravings';
-    String storyPrompt5 = 'someone interesting you met';
-    String storyPrompt6 = 'when you found out the gender of your baby';
-    String storyPrompt7 = 'something exciting about being pregnant';
-    String storyPrompt8 = 'What has been challenging about being pregnant?';
-    String storyPrompt9 = 'Who is the most supportive person during pregnancy?';
-    String storyPrompt10 = 'Who is the most annoying person during pregnancy?';
-    String storyPrompt11 = 'How do you feel this week?';
-    String storyPrompt12 = 'What milestones have been achieved lately?';
-    String storyPrompt13 = 'I felt [fill in the blank] when I saw my first ultrasound';
-    String storyPrompt14 = 'How are you figuring out your baby\'s name?';
-    String storyPrompt15 = 'What was it like when you told your parents you were pregnant?';
-    String storyPrompt16 = 'What symptoms do you have today?';
-    String storyPrompt17 = 'What is on your list of baby names?';
-    String storyPrompt18 = 'What did you never know about pregnancy?';
-    String storyPrompt19 = 'What is the most surprising thing about pregnancy?';
-    String storyPrompt20 = 'What was your last doctors visit like?';
-    String storyPrompt21 = 'I felt [fill in the blank] when I found out we were having a boy/girl';
-    String storyPrompt22 = 'WHen I see other babies, it makes me feel [fill in the blank]';
-    String storyPrompt23 = 'What about becoming a parent thrills you the most?';
-    String storyPrompt24 = 'What do you want to let go of before having children?';
-    String storyPrompt25 = 'What do you want to hold on to before having children?';
-    String storyPrompt26 = 'Which of your childhood memories gives you the most comfort?';
-    String storyPrompt27 = 'Tell the story of when you found out you were pregnant';
+    String storyPrompt1 = 'Tell a story with a surprising moment this week about pregnancy';
+    String storyPrompt2 = 'Tell a story of who made you feel grateful this week';
+    String storyPrompt3 = 'Tell a story about how you are preparing for your newborn baby and life.';
+    String storyPrompt4 = 'Tell a story about your food cravings';
+    String storyPrompt5 = 'Tell a story about someone interesting you met this week.';
+    String storyPrompt6 = 'Tell the story about when you found out about the gender of your baby.';
+    String storyPrompt7 = 'Tell a story about your last doctors visit';
+    String storyPrompt8 = 'Tell a story about a challenge involving pregnancy';
+    String storyPrompt9 = 'Tell a story about someone who supported you this week';
+    String storyPrompt10 = 'Tell a story about who annoyed this week?';
+    String storyPrompt11 = 'Tell a story about how you felt affected your day';
+    String storyPrompt12 = 'Tell a story about a milestone achieved recently';
+    String storyPrompt13 = 'Tell a story about your last ultrasound.';
+    String storyPrompt14 = 'Tell a story about how you are figuring out your baby\'s name.';
+    String storyPrompt15 = 'Tell a story about when you told your parents you were pregnant.';
+    String storyPrompt16 = 'Tell a story about your symptoms this week';
+    String storyPrompt17 = 'Tell a story of a childhood memory that you hope your child NEVER experiences.';
+    String storyPrompt18 = 'Tell a story of a childhood memory that you hope your child experiences';
+    String storyPrompt19 = 'Tell a story involving sleep';
+    String storyPrompt20 = 'Tell a story about how you are learning to raise a kid';
+    String storyPrompt21 = 'Tell a story about what you gave up while being pregnant';
+    String storyPrompt22 = 'Tell a story about something you secretly hate about pregnancy';
+    String storyPrompt23 = 'Tell a story about something you love about pregnancy';
+    String storyPrompt24 = 'Think about the dumbest thing that makes you angry. Now tell a story about that';
+    String storyPrompt25 = 'Think about the dumbest thing that makes you cry. Now tell a story about that';
+    String storyPrompt26 = 'TBD';
+    String storyPrompt27 = 'TBD';
 
     List storyPrompt = [storyPrompt1,
       storyPrompt2,
@@ -104,17 +104,31 @@ class StoryPromptService {
 
 
   String getRandomGeneralStoryPrompt(){
-    String storyPrompt1 = 'I am... [fill in the blank]';
-    String storyPrompt2 = 'Throughout my life, I have been haunted by [fill in the blank]';
-    String storyPrompt3 = 'Everywhere I go, I [fill in the blank]';
-    String storyPrompt4 = 'I secretly love [fill in the blank]';
-    String storyPrompt5 = 'I secretly hate [fill in the blank]';
+    String storyPrompt1 = 'Tell a story about when you took the high road.';
+    String storyPrompt2 = 'Tell a story about when you did not take the high road';
+    String storyPrompt3 = 'Tell a story involving a car.';
+    String storyPrompt4 = 'Tell a story about something you secretly love.';
+    String storyPrompt5 = 'Tell a story about something you secretly hate.';
+    String storyPrompt6 = 'Tell a story about where you ended up exactly where you started.';
+    String storyPrompt7 = 'Tell a story about an encounter with the police';
+    String storyPrompt8 = 'Tell a story about a time you were in a fight';
+    String storyPrompt9 = 'Tell a story about an encounter with your neighbor';
+    String storyPrompt10 = 'Tell a story about a previous birthday';
+    String storyPrompt11 = 'Tell a story about a time you were around for a friend or family member\'s birthday';
+    String storyPrompt12 = 'Tell a story about a fond childhood memory';
+    String storyPrompt13 = 'Tell a story about something you found surprising about one of your parents';
+    String storyPrompt15 = 'Tell a story about the dumbest moment in your childhood';
+    String storyPrompt16 = 'Tell a story about how you were bullied in high school';
+    String storyPrompt17 = 'Tell a story about how you bullied someone in high school';
+    String storyPrompt18 = 'Tell a story about a bug invading your home';
 
-    List storyPrompt = [storyPrompt1, storyPrompt2, storyPrompt3, storyPrompt4, storyPrompt5];
 
-    int randomNumber = GeneralService.getRandomNumber(6);
-    if (randomNumber > 4) {
-      randomNumber = 4;
+
+    List storyPrompt = [storyPrompt1, storyPrompt2, storyPrompt3, storyPrompt4, storyPrompt5, storyPrompt6, storyPrompt7, storyPrompt8, storyPrompt9, storyPrompt10, storyPrompt11, storyPrompt12, storyPrompt13, storyPrompt15, storyPrompt16, storyPrompt17];
+
+    int randomNumber = GeneralService.getRandomNumber(18);
+    if (randomNumber > 17) {
+      randomNumber = 17;
     }
 
     return storyPrompt[randomNumber];

@@ -139,13 +139,9 @@ class CameraScreenState extends State<CameraScreen> {
                     ),
                     child: Column(
                       children: [
-                        const Text(
-                          'Tell a story about...',
-                          style: TextStyle(color: Colors.white, fontSize: 12),
-                        ),
                         Text(
                           widget.storySession.storyPrompt,
-                          style: const TextStyle(color: Colors.white, fontSize: 48),
+                          style: const TextStyle(color: Colors.white, fontSize: 24),
                         ),
                       ],
                     ),

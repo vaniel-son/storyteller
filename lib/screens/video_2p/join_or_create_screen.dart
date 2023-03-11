@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:storyteller/menu_screen.dart';
 import 'package:storyteller/screens/video_1p/camera_screen.dart';
 import 'package:storyteller/screens/video_2p/input_room_name_screen.dart';
 import 'package:storyteller/models/story_session_model.dart';
@@ -37,12 +38,22 @@ class _JoinOrCreateRoomScreenState extends State<JoinOrCreateRoomScreen> {
         context, PageTransition(type: PageTransitionType.bottomToTop, child: InputRoomName(storySession: storySession)));
   }
 
+  menuAction() {
+    Navigator.push(context, PageTransition(type: PageTransitionType.leftToRightWithFade, child: const Menu()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        // title: const Text('Video Room'),
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            menuAction();
+          },
+        ),
+        title: const Text('Two Player Story'),
       ),
       /*bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -105,7 +116,7 @@ class _JoinOrCreateRoomScreenState extends State<JoinOrCreateRoomScreen> {
                                               ),
                                             ],
                                           ),
-                                          const Text('Create group Campfire', style: TextStyle(fontSize: 18))],
+                                          const Text('Create group campfire', style: TextStyle(fontSize: 18))],
                                       ),
                                     ),
                                   ),
@@ -142,7 +153,7 @@ class _JoinOrCreateRoomScreenState extends State<JoinOrCreateRoomScreen> {
                                               ),
                                             ],
                                           ),
-                                          const Text('Join existing Campfire', style: TextStyle(fontSize: 18),)],
+                                          const Text('Join existing campfire', style: TextStyle(fontSize: 18),)],
                                       ),
                                     ),
                                   ),

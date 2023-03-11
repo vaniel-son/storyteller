@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:storyteller/wrapper.dart';
@@ -24,6 +23,7 @@ void main() async {
         colorSchemeSeed: Colors.black54,
         useMaterial3: true,
         brightness: Brightness.dark,
+        fontFamily: 'Sono',
       ),
       title: "Storyteller",
       home: const Wrapper(),

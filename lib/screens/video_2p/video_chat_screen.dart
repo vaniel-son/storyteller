@@ -116,13 +116,9 @@ class _VideoChatState extends State<VideoChat> {
                           visible: (widget.storySession.storyPromptType == constants.StoryPromptType.general),
                           child: Column(
                             children: [
-                              const Text(
-                                'Tell a story about...',
-                                style: TextStyle(color: Colors.white, fontSize: 48),
-                              ),
                               Text(
                                 widget.storySession.storyPrompt,
-                                style: const TextStyle(color: Colors.white, fontSize: 14.0),
+                                style: const TextStyle(color: Colors.white, fontSize: 24.0),
                               ),
                             ],
                           ),

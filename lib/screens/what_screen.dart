@@ -42,9 +42,9 @@ class _WhatScreenState extends State<WhatScreen> {
           //mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Lottie.network('https://assets4.lottiefiles.com/packages/lf20_xiuflspu.json'),
-            const Text('Welcome to Campfire', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            const Text('Tell and listen to stories with friends and family, or me, woof.', textAlign: TextAlign.center,
+            Lottie.network('https://assets4.lottiefiles.com/packages/lf20_xiuflspu.json', height: 200),
+            const Text('WELCOME, STORYTELLER', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const Text('Video record your personal stories to share with family, me (woof), or to pass on to your future generations.', textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14)),
             InkWell(
               onTap: () {
@@ -53,6 +53,7 @@ class _WhatScreenState extends State<WhatScreen> {
               child: Column(
                 children: [
                   Lottie.network('https://assets1.lottiefiles.com/packages/lf20_jTM81dQuPv.json'),
+                  Container(),
                   // const Text('(Tap my head to begin)', style: TextStyle(fontSize: 14)),
                 ],
               ),),

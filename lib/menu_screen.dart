@@ -82,6 +82,30 @@ class MenuState extends State<Menu> {
                           ],
                         ),
 
+                        /// Two Players
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                Navigator.pushAndRemoveUntil(context, PageTransition(type: PageTransitionType.leftToRightWithFade, child: const JoinOrCreateRoomScreen()), (Route<dynamic> route) => false);
+                                print('tap');
+                              },
+                              child: Row(
+                                children: [
+                                  const SizedBox(width: 8),
+                                  const Icon(Icons.people,
+                                    size: 32, color: Colors.yellow,),
+                                  const SizedBox(width: 16),
+                                  Text('Two Player Story', style: Theme.of(context).textTheme.bodyText1),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                          ],
+                        ),
+
                         /// Divider
                         const SizedBox(height: 16),
                         const Divider(height: 1.0, thickness: 1.0, indent: 0.0),
@@ -99,7 +123,7 @@ class MenuState extends State<Menu> {
                                 children: [
                                   const SizedBox(width: 8),
                                   const Icon(Icons.book,
-                                      size: 32, color: Colors.yellow,),
+                                    size: 32, color: Colors.yellow,),
                                   const SizedBox(width: 16),
                                   Text('Your Stories', style: Theme.of(context).textTheme.bodyText1),
                                 ],
@@ -115,67 +139,6 @@ class MenuState extends State<Menu> {
                         const SizedBox(height: 16),
                         const Divider(height: 1.0, thickness: 1.0, indent: 0.0),
                         const SizedBox(height: 16),
-
-                        /// Two Players
-                        Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () async {
-                                Navigator.pushAndRemoveUntil(context, PageTransition(type: PageTransitionType.leftToRightWithFade, child: const JoinOrCreateRoomScreen()), (Route<dynamic> route) => false);
-                                print('tap');
-                              },
-                              child: Row(
-                                children: [
-                                  const SizedBox(width: 8),
-                                  const Icon(Icons.people,
-                                      size: 32, color: Colors.yellow,),
-                                  const SizedBox(width: 16),
-                                  Text('Two Player Story', style: Theme.of(context).textTheme.bodyText1),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                          ],
-                        ),
-
-                        /// Divider
-                        const SizedBox(height: 16),
-                        const Divider(height: 1.0, thickness: 1.0, indent: 0.0),
-                        const SizedBox(height: 16),
-
-                        /// Two Player: Acting
-                        Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () async {
-                                Navigator.pushAndRemoveUntil(context, PageTransition(type: PageTransitionType.leftToRightWithFade, child: const JoinOrCreateRoomScreen()), (Route<dynamic> route) => false);
-                                print('tap');
-                              },
-                              child: Row(
-                                children: [
-                                  const SizedBox(width: 8),
-                                  const Icon(Icons.theater_comedy,
-                                      size: 32, color: Colors.yellow,),
-                                  const SizedBox(width: 16),
-                                  Text('Two Player Acting', style: Theme.of(context).textTheme.bodyText1),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                          ],
-                        ),
-
-
-                        /// Divider
-                        const SizedBox(height: 16),
-                        const Divider(height: 1.0, thickness: 1.0, indent: 0.0),
-                        const SizedBox(height: 16),
-
-
 
                         /// Sign Out
                         Column(
