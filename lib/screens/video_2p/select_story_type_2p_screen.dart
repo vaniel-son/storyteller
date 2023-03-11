@@ -20,31 +20,29 @@ class SelectStoryType2PScreen extends StatefulWidget {
 }
 
 class _SelectStoryType2PScreenState extends State<SelectStoryType2PScreen> {
-  String roomName = '';
-
   GeneralService generalService = GeneralService();
   SecureLocalStorageService secureLocalStorageService = SecureLocalStorageService();
-  StorySessionModel storySession = StorySessionModel();
+  // StorySessionModel storySession = StorySessionModel();
   StoryPromptService storyPromptService = StoryPromptService();
   late String? currentStoryPromptTypeSelected = 'none';
   bool isLoading = false;
 
   selectOption(String storyPromptType) async {
     // await secureLocalStorageService.setSecureStorage(key: 'storyPromptType', value: storyPromptType);
-    storySession.storyPromptType = storyPromptType; // update story object for use on next screen
+    widget.storySession.storyPromptType = storyPromptType; // update story object for use on next screen
 
     // set story prompt based on the type
-    storySession.storyPrompt = storyPromptService.setStoryPrompt(storySession.storyPromptType);
+    widget.storySession.storyPrompt = storyPromptService.setStoryPrompt(widget.storySession.storyPromptType);
 
     // ux: change color of selected item
-    currentStoryPromptTypeSelected = storySession.storyPromptType;
+    currentStoryPromptTypeSelected = widget.storySession.storyPromptType;
     setState(() {
 
     });
 
     if (mounted) {
       Navigator.push(
-          context, PageTransition(type: PageTransitionType.bottomToTop, child: VideoChat(storySession: storySession)));
+          context, PageTransition(type: PageTransitionType.bottomToTop, child: VideoChat(storySession: widget.storySession)));
     }
   }
 

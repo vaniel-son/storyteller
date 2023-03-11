@@ -26,6 +26,8 @@ class _InputRoomNameState extends State<InputRoomName> {
   join() {
     channelName = channelTextController.text;
     widget.storySession.roomName = channelName;
+    print('channelName: $channelName');
+    print('roomname: ${widget.storySession.roomName}');
     if (channelName.isEmpty) {
       GeneralService.displaySnackBar(context, 'Enter a room name');
     } else {
